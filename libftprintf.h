@@ -25,6 +25,7 @@ unsigned int	ft_putnbr(int nbr);
 unsigned int	ft_putunbr(unsigned int nbr);
 unsigned int	ft_putstr(char *str);
 unsigned int	ft_puthex(unsigned int to_hex, char xcase);
+unsigned int	ft_putptr(unsigned long long to_hex);
 void			*ft_calloc(size_t nmemb, size_t size);
 
 #endif

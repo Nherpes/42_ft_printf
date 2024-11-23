@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 10:54:27 by david-fe          #+#    #+#             */
-/*   Updated: 2024/11/21 11:00:35 by david-fe         ###   ########.fr       */
+/*   Created: 2024/11/23 19:41:50 by david-fe          #+#    #+#             */
+/*   Updated: 2024/11/23 20:15:50 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-unsigned int	ft_hexcount(unsigned int to_count)
+unsigned int	ft_ptrlen(unsigned int to_count)
 {
 	unsigned int	i;
 
@@ -25,8 +25,7 @@ unsigned int	ft_hexcount(unsigned int to_count)
 	return (i);
 }
 
-char	*ft_fillhex(unsigned int to_hex, char *hex_str,
-				char format, unsigned int i)
+char	*ft_fillptr(unsigned long long to_hex, char *hex_str, unsigned int i)
 {
 	unsigned int	temp_num;
 
@@ -35,9 +34,7 @@ char	*ft_fillhex(unsigned int to_hex, char *hex_str,
 		temp_num = to_hex % 16;
 		if (temp_num < 10)
 			temp_num += '0';
-		else if (format == 'X')
-			temp_num += 55;
-		else if (format == 'x')
+		else 
 			temp_num += 87;
 		hex_str[i--] = temp_num;
 		to_hex /= 16;
@@ -45,22 +42,21 @@ char	*ft_fillhex(unsigned int to_hex, char *hex_str,
 	return (hex_str);
 }
 
-unsigned int	ft_puthex(unsigned int to_hex, char format)
+unsigned int	ft_putptr(unsigned long long to_hex)
 {
 	char			*hex_str;
 	unsigned int	i;
 
-	if (!to_hex || !format)
-		return (0);
 	if (to_hex == 0)
-		return (ft_putchar('0'));
-	i = ft_hexcount(to_hex);
+		return (ft_putstr("(nil)"));
+	i = ft_ptrlen(to_hex);
 	hex_str = ft_calloc((i + 1), sizeof(char *));
 	if (!hex_str)
 		return (0);
 	i--;
-	hex_str = ft_fillhex(to_hex, hex_str, format, i);
+	hex_str = ft_fillptr(to_hex, hex_str, i);
 	i = (unsigned int)ft_strlen(hex_str);
+	i += ft_putstr("0x");
 	ft_putstr(hex_str);
 	free (hex_str);
 	hex_str = NULL;
@@ -69,14 +65,9 @@ unsigned int	ft_puthex(unsigned int to_hex, char format)
 /*
 int	main(void)
 {
-	unsigned int	hex = 12312312;
-	void	*hex_ptr = &hex;
-	printf("%x\n", hex);
-	ft_puthex(hex, 'x');
-	printf("\n%X\n", hex);
-	ft_puthex(hex, 'X');
+	unsigned long long hex = 12312312;
+	unsigned long long *hex_ptr = &hex;
 	printf("\n%p", hex_ptr);
-	//ft_puthex(hex_ptr, 'p');
-	printf("\n%d", hex);
+	ft_putptr(hex_ptr);
 	//	printf("number of digits post conversion:\n%d\n", i);
 }*/

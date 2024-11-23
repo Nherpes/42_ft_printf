@@ -19,7 +19,7 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = libftptrintf.a
 
 OBJ = $(SRC:.c=.o)
-SRC = ft_printf.c ft_strchr.c ft_strlen.c ft_putchar.c ft_putnbr.c ft_putunbr.c ft_putstr.c ft_puthex.c ft_calloc.c
+SRC = ft_printf.c ft_strchr.c ft_strlen.c ft_putchar.c ft_putnbr.c ft_putunbr.c ft_putstr.c ft_puthex.c ft_calloc.c ft_putptr.c
 #BONUS_OBJ = $(BONUS_SRC:.c=.o)
 #BONUS_SRC = 
 

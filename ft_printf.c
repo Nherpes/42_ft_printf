@@ -18,39 +18,40 @@ size_t	ft_formatchr(va_list arg_ptr, char format)
 	size_t	n;
 
 	n = 0;
-	if(format == 'c')
+	if (format == 'c')
 		n = ft_putchar(va_arg(arg_ptr, int));
-	else if(format == 's')
+	else if (format == 's')
 		n = ft_putstr(va_arg(arg_ptr, char *));
-	else if(format == 'p')
-		write(1, "P", 1); //missing function
-	else if(format == 'd' || format == 'i')
+	else if (format == 'p')
+		n = ft_putptr(va_arg(arg_ptr, unsigned long long));
+	else if (format == 'd' || format == 'i')
 		n = ft_putnbr(va_arg(arg_ptr, int));
-	else if(format == 'u')
+	else if (format == 'u')
 		n = ft_putunbr(va_arg(arg_ptr, unsigned int));
-	else if(format == 'x' || format == 'X')
+	else if (format == 'x' || format == 'X')
 		n = ft_puthex(va_arg(arg_ptr, unsigned int), format);
-	else if(format == '%')
+	else if (format == '%')
 		write(1, "%", 1);
-	return (n); //add the number of extra characters diplayed 
+	return (n);
 }
 
 int	ft_printf(const char *arg_str, ...)
 {
-	va_list arg_ptr;
+	va_list	arg_ptr;
 	size_t	i;
 	size_t	count;
 
 	va_start(arg_ptr, arg_str);
 	count = 0;
 	i = 0;
-	while(arg_str[i])
+	while (arg_str[i])
 	{
-		if(arg_str[i] == '%')
+		if (arg_str[i] == '%')
 		{
-			count += ft_formatchr(arg_ptr, *ft_strchr("cspdiuxX%", arg_str[i + 1]));
+			count += ft_formatchr(arg_ptr, *ft_strchr
+					("cspdiuxX%", arg_str[i + 1]));
 			i += 2;
-		} 
+		}
 		else
 		{
 			ft_putchar(arg_str[i]);
@@ -72,9 +73,13 @@ int	ft_printf(const char *arg_str, ...)
 //add arg connection
 //check for args being null & compare w/ printf
 
-
 int	main(void)
 {
-	ft_printf("I am %s, and these are the value I believe in:%% %d, %x, %X, %i, %c\n", "David", 1, 15, 15, 9000, 'a');
-	printf("I am %s, and these are the value I believe in:%% %d, %x, %X, %i, %c\n", "David", 1, 15, 15, 9000, 'a');
+	char	c = 'a';
+	char	*ptr = &c;
+
+	printf(
+		"I am %s, I believe in:%% %d, %x, %X, %i, %c, %p\n", "David", 1, 15, 15, 9000, 'a', (void *)ptr);
+	ft_printf(
+		"I am %s, I believe in:%% %d, %x, %X, %i, %c, %p\n", "David", 1, 15, 15, 9000, 'a', (void *)ptr);
 }
